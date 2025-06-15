@@ -1,0 +1,65 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+:root {
+  font-family: "Poppins";
+}
+
+.main-color {
+  color: #cff24d
+}
+
+.main-color-border {
+  border: 2px solid #cff24d
+}
+
+.main-color-bg {
+  background-color: #cff24d;
+  border: #cff24d
+}
+
+.btn-main {
+  background-color: #cff24d !important;
+  border: 1px solid #cff24d;
+}
+
+.btn-main:hover {
+  background-color: #d4ff3a !important;
+  border: 1px solid #cff24d;
+}
+
+.btn-nav {
+  border: 1px solid #cff24d;
+  background-color: #fff;
+}
+
+.btn-nav:hover {
+  border: 1px solid #cff24d;
+  background-color: #d4ff3a;
+}
+
+.web-title,
+.header-p {
+  font-family: "Miniver";
+}
+
+.highlight {
+  position: relative;
+  z-index: 1;
+  /* Ensures text stays above the background */
+}
+
+.highlight::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background-color: #CFF24D;
+  transform: translateY(-50%);
+  border-radius: 4px;
+  z-index: -1;
+  padding: 0 2px;
+}
