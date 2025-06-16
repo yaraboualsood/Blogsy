@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://blogsy-pearl.vercel.app' || 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+console.log('Environment:', import.meta.env.MODE); // 'development' or 'production'
+console.log('API URL from env:', import.meta.env.VITE_API_URL);
+console.log('Final API URL being used:', API_BASE_URL);
 
 const getAuthHeader = () => {
     const token = localStorage.getItem('token');
@@ -10,8 +13,6 @@ const getAuthHeader = () => {
         }
     };
 };
-
-
 
 export const blogService = {
     // GET ALL POSTS
@@ -38,7 +39,7 @@ export const blogService = {
 
     // CREATE POST (!!Authenticated)
     createPost: async (formData, token) => {
-        const res = await axios.post("http://localhost:3000/posts", formData, {
+        const res = await axios.post(`${API_BASE_URL}/posts`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "multipart/form-data",
@@ -61,13 +62,12 @@ export const blogService = {
                     }
                 }
             );
-            return response.data.updated; // Just return the updated post directly
+            return response.data.updated;
         } catch (error) {
             console.error(`Error updating post ${id}:`, error.response?.data || error.message);
             throw error;
         }
     },
-
 
     // DELETE POST (!!Authenticated)
     deletePost: async (id) => {
