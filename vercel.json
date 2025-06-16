@@ -15,7 +15,15 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
+      "src": "/users/(.*)",
+      "dest": "server/index.js"
+    },
+    {
+      "src": "/posts/(.*)",
+      "dest": "server/index.js"
+    },
+    {
+      "src": "/comments/(.*)",
       "dest": "server/index.js"
     },
     {
