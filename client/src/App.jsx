@@ -1,20 +1,19 @@
-import React from 'react'
-import Navbar from './components/Navbar'
+import React from "react";
+import Navbar from "./components/Navbar";
 // import Header from './components/Header';
 // import LatestBlogs from './components/LatestBlogs';
-import BlogDetails from './pages/BlogDetails';
-import { Route, Routes } from 'react-router';
-import Feed from './pages/Feed';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Profile from './pages/Profile';
-import Footer from './components/Footer';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import ProtectedRoute from './components/ProtectedRoute';
-import ErrorPage from './pages/ErrorPage';
-
+import BlogDetails from "./pages/BlogDetails";
+import { Route, Routes } from "react-router";
+import Feed from "./pages/Feed";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
+import Footer from "./components/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ErrorPage from "./pages/ErrorPage";
 
 export default function App() {
   return (
@@ -33,16 +32,12 @@ export default function App() {
           <Route path="/new" element={<Home showModal />} />
           <Route path="/blog/:id/edit" element={<BlogDetails editMode />} />
           {/* <Route path="/profile" element={<Profile />} /> */}
-
         </Route>
         <Route path="*" element={<ErrorPage />} />
-
       </Routes>
       <Footer />
 
       <ToastContainer />
-
     </>
   );
 }
-
