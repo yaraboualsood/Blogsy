@@ -46,8 +46,11 @@ app.use(cors({
     credentials: true,
 }));
 
+// Log MongoDB connection attempt
+console.log('Attempting to connect to MongoDB...');
 connectionDB()
-
+    .then(() => console.log('MongoDB connected successfully'))
+    .catch(err => console.error('MongoDB connection failed:', err));
 
 app.use(express.json())
 
@@ -57,17 +60,16 @@ app.use("/users", userRouter)
 //posts
 app.use("/posts", postRouter)
 
-
-//comments
-app.use("/comments", commentRouter)
-
+//comments - mount under posts
+app.use("/posts/:postId/comments", commentRouter)
 
 //handle any invalid urls
 app.use('*', (req, res, next) => {
+    console.log('Invalid URL accessed:', req.originalUrl);
     return next(new AppError(`Invalid url: ${req.originalUrl}`, 404))
 })
 
 //global error handling middleware
 app.use(globalErrorHandler)
 
-app.listen(process.env.PORT, () => console.log(`Example app listening on port ${process.env.PORT}!`))
+app.listen(process.env.PORT, () => console.log(`Server listening on port ${process.env.PORT}!`))

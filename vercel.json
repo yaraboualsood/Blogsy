@@ -23,7 +23,7 @@
       "dest": "server/index.js"
     },
     {
-      "src": "/comments/(.*)",
+      "src": "/posts/(.*)/comments/(.*)",
       "dest": "server/index.js"
     },
     {
