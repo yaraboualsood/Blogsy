@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors';
-import connectionDB from './DB/connectionDB.js'
+import connectionDB from './db/connectionDB.js'
 import userRouter from './src/modules/users/user.routes.js'
 import postRouter from './src/modules/posts/post.routes.js'
 import commentRouter from './src/modules/comments/comments.routes.js'
@@ -19,6 +19,7 @@ const app = express();
 const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:3000',
+    'https://blogsy-pearl.vercel.app'
 
 ];
 
