@@ -55,13 +55,13 @@ connectionDB()
 app.use(express.json())
 
 //user 
-app.use("/users", userRouter)
+app.use("/api/users", userRouter)
 
 //posts
-app.use("/posts", postRouter)
+app.use("/api/posts", postRouter)
 
 //comments - mount under posts
-app.use("/posts/:postId/comments", commentRouter)
+app.use("/api/posts/:postId/comments", commentRouter)
 
 //handle any invalid urls
 app.use('*', (req, res, next) => {

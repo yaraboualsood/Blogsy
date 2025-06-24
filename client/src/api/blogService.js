@@ -18,7 +18,7 @@ export const blogService = {
     // GET ALL POSTS
     getAllPosts: async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/posts`);
+            const response = await axios.get(`${API_BASE_URL}/api/posts`);
             return response.data.posts;
         } catch (error) {
             console.error('Error fetching posts:', error);
@@ -29,7 +29,7 @@ export const blogService = {
     // GET ONE POST BY ID
     getPostById: async (id) => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/posts/${id}`);
+            const response = await axios.get(`${API_BASE_URL}/api/posts/${id}`);
             return response.data;
         } catch (error) {
             console.error(`Error fetching post ${id}:`, error);
@@ -39,7 +39,7 @@ export const blogService = {
 
     // CREATE POST (!!Authenticated)
     createPost: async (formData, token) => {
-        const res = await axios.post(`${API_BASE_URL}/posts`, formData, {
+        const res = await axios.post(`${API_BASE_URL}/api/posts`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "multipart/form-data",
@@ -52,7 +52,7 @@ export const blogService = {
     updatePost: async (id, postData) => {
         try {
             const response = await axios.put(
-                `${API_BASE_URL}/posts/${id}`,
+                `${API_BASE_URL}/api/posts/${id}`,
                 postData,
                 {
                     ...getAuthHeader(),
@@ -72,7 +72,7 @@ export const blogService = {
     // DELETE POST (!!Authenticated)
     deletePost: async (id) => {
         try {
-            const response = await axios.delete(`${API_BASE_URL}/posts/${id}`, getAuthHeader());
+            const response = await axios.delete(`${API_BASE_URL}/api/posts/${id}`, getAuthHeader());
             return response.data;
         } catch (error) {
             console.error(`Error deleting post ${id}:`, error.response?.data || error.message);
@@ -83,7 +83,7 @@ export const blogService = {
     // GET COMMENTS OF POST
     getComments: async (postId) => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/posts/${postId}/comments`);
+            const response = await axios.get(`${API_BASE_URL}/api/posts/${postId}/comments`);
             return response.data;
         } catch (error) {
             console.error(`Error fetching comments for post ${postId}:`, error);
@@ -94,7 +94,7 @@ export const blogService = {
     // ADD COMMENT TO POST (!!Authenticated)
     addComment: async (postId, commentData) => {
         try {
-            const response = await axios.post(`${API_BASE_URL}/posts/${postId}/comments`, commentData, getAuthHeader());
+            const response = await axios.post(`${API_BASE_URL}/api/posts/${postId}/comments`, commentData, getAuthHeader());
             return response.data;
         } catch (error) {
             console.error(`Error adding comment to post ${postId}:`, error.response?.data || error.message);
@@ -105,7 +105,7 @@ export const blogService = {
     // DELETE MY COMMENT (!!Authenticated)
     deleteComment: async (postId, commentId) => {
         try {
-            const response = await axios.delete(`${API_BASE_URL}/posts/${postId}/comments/${commentId}`, getAuthHeader());
+            const response = await axios.delete(`${API_BASE_URL}/api/posts/${postId}/comments/${commentId}`, getAuthHeader());
             return response.data;
         } catch (error) {
             console.error(`Error deleting comment ${commentId}:`, error.response?.data || error.message);
@@ -116,7 +116,7 @@ export const blogService = {
     // UPDATE MY COMMENT (!!Authenticated)
     updateComment: async (postId, commentId, commentData) => {
         try {
-            const response = await axios.put(`${API_BASE_URL}/posts/${postId}/comments/${commentId}`, commentData, getAuthHeader());
+            const response = await axios.put(`${API_BASE_URL}/api/posts/${postId}/comments/${commentId}`, commentData, getAuthHeader());
             return response.data;
         } catch (error) {
             console.error(`Error updating comment ${commentId}:`, error.response?.data || error.message);
