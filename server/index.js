@@ -72,4 +72,8 @@ app.use('*', (req, res, next) => {
 //global error handling middleware
 app.use(globalErrorHandler)
 
-app.listen(process.env.PORT, () => console.log(`Server listening on port ${process.env.PORT}!`))
+if (!process.env.VERCEL) {
+    app.listen(process.env.PORT || 3000, () => console.log(`Server listening on port ${process.env.PORT || 3000}!`))
+}
+
+export default app;
