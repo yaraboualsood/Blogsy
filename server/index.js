@@ -73,4 +73,17 @@ app.use('*', (req, res, next) => {
 //global error handling middleware
 app.use(globalErrorHandler)
 
+// Vercel serverless function handler
 export default app;
+
+// For Vercel, we need to handle the serverless function properly
+if (process.env.NODE_ENV === 'production') {
+    // In production (Vercel), the app is automatically handled
+    console.log('Running in Vercel serverless environment');
+} else {
+    // For local development
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
