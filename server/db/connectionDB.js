@@ -17,7 +17,7 @@ const connectDB = async () => {
       // Serverless-optimized settings
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
-      bufferCommands: false,
+      bufferCommands: true, // Allow buffering for serverless
       bufferMaxEntries: 0,
       maxPoolSize: 1, // Maintain only one connection in serverless
       minPoolSize: 0,

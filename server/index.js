@@ -57,8 +57,8 @@ app.use(express.json())
 app.use(async (req, res, next) => {
     try {
         console.log('Attempting database connection for request:', req.method, req.originalUrl);
-        const connectionStatus = await connectionDB();
-        console.log('Database connection status:', connectionStatus);
+        await connectionDB();
+        console.log('Database connection established successfully');
         next();
     } catch (error) {
         console.error('Database connection failed:', error);
@@ -69,9 +69,23 @@ app.use(async (req, res, next) => {
         });
         res.status(500).json({
             error: 'Database connection failed',
-            details: process.env.NODE_ENV !== 'production' ? error.message : undefined
+            details: error.message
         });
     }
+});
+
+// Root endpoint
+app.get('/', (req, res) => {
+    res.json({
+        message: 'Blogsy API Server',
+        status: 'OK',
+        timestamp: new Date().toISOString(),
+        endpoints: {
+            health: '/api/health',
+            posts: '/api/posts',
+            users: '/api/users'
+        }
+    });
 });
 
 // Health check endpoint
