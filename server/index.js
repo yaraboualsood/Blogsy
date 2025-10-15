@@ -19,10 +19,9 @@ const app = express();
 const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:3000',
-    'https://blogsy-2g5m.vercel.app/',
+    'https://blogsy-2g5m.vercel.app',
     'https://blogsy-2g5m-pfh9ex8p7-yara-maher-abou-al-soods-projects.vercel.app',
     'https://blogsy-snowy.vercel.app'
-
 ];
 
 app.use(cors({
