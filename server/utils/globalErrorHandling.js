@@ -68,15 +68,14 @@ export const globalErrorHandler = (err, req, res, next) => {
         });
     }
 
-    // Default error response - show more details in development
-    const isDevelopment = process.env.NODE_ENV !== 'production';
+    // Default error response - show actual error details for debugging
     res.status(err.statusCode || 500).json({
         msg: "error",
-        error: isDevelopment ? err.message : 'Something went wrong',
-        ...(isDevelopment && {
-            stack: err.stack,
-            name: err.name,
-            code: err.code
+        error: err.message,
+        name: err.name,
+        code: err.code,
+        ...(process.env.NODE_ENV !== 'production' && {
+            stack: err.stack
         })
     });
 }
