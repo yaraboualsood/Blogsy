@@ -11,6 +11,11 @@ export const asyncHandler = (fn) => {
 
 export const globalErrorHandler = (err, req, res, next) => {
     console.error('Global error handler:', err);
+    console.error('Error name:', err.name);
+    console.error('Error message:', err.message);
+    console.error('Error stack:', err.stack);
+    console.error('Request URL:', req.originalUrl);
+    console.error('Request method:', req.method);
 
     // Ensure response hasn't been sent already
     if (res.headersSent) {
@@ -40,10 +45,38 @@ export const globalErrorHandler = (err, req, res, next) => {
         });
     }
 
-    // Default error response
+    // Handle JWT errors
+    if (err.name === 'JsonWebTokenError') {
+        return res.status(401).json({
+            msg: "Invalid token",
+            error: "Please provide a valid token"
+        });
+    }
+
+    if (err.name === 'TokenExpiredError') {
+        return res.status(401).json({
+            msg: "Token expired",
+            error: "Please login again"
+        });
+    }
+
+    // Handle MongoDB connection errors
+    if (err.name === 'MongoNetworkError' || err.name === 'MongoServerError') {
+        return res.status(500).json({
+            msg: "Database connection error",
+            error: "Unable to connect to database"
+        });
+    }
+
+    // Default error response - show more details in development
+    const isDevelopment = process.env.NODE_ENV !== 'production';
     res.status(err.statusCode || 500).json({
         msg: "error",
-        error: process.env.NODE_ENV === 'production' ? 'Something went wrong' : err.message,
-        ...(process.env.NODE_ENV !== 'production' && { stack: err.stack })
+        error: isDevelopment ? err.message : 'Something went wrong',
+        ...(isDevelopment && {
+            stack: err.stack,
+            name: err.name,
+            code: err.code
+        })
     });
 }

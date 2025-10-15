@@ -56,12 +56,33 @@ app.use(express.json())
 // Ensure database connection for each request
 app.use(async (req, res, next) => {
     try {
-        await connectionDB();
+        console.log('Attempting database connection for request:', req.method, req.originalUrl);
+        const connectionStatus = await connectionDB();
+        console.log('Database connection status:', connectionStatus);
         next();
     } catch (error) {
         console.error('Database connection failed:', error);
-        res.status(500).json({ error: 'Database connection failed' });
+        console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            code: error.code
+        });
+        res.status(500).json({
+            error: 'Database connection failed',
+            details: process.env.NODE_ENV !== 'production' ? error.message : undefined
+        });
     }
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.json({
+        status: 'OK',
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || 'development',
+        hasMongoUri: !!process.env.MONGO_URI,
+        hasJwtSecret: !!process.env.JWT_SECRET
+    });
 });
 
 //user 
