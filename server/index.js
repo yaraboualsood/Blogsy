@@ -57,8 +57,13 @@ app.use(express.json())
 app.use(async (req, res, next) => {
     try {
         console.log('Attempting database connection for request:', req.method, req.originalUrl);
-        await connectionDB();
-        console.log('Database connection established successfully');
+        const connected = await connectionDB();
+        console.log('Database connection result:', connected);
+
+        if (!connected) {
+            throw new Error('Database connection failed');
+        }
+
         next();
     } catch (error) {
         console.error('Database connection failed:', error);
@@ -95,7 +100,10 @@ app.get('/api/health', (req, res) => {
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV || 'development',
         hasMongoUri: !!process.env.MONGO_URI,
-        hasJwtSecret: !!process.env.JWT_SECRET
+        hasJwtSecret: !!process.env.JWT_SECRET,
+        mongoUriFormat: process.env.MONGO_URI ?
+            (process.env.MONGO_URI.startsWith('mongodb') ? 'Valid' : 'Invalid format') :
+            'Not set'
     });
 });
 
