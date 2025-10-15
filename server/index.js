@@ -47,13 +47,22 @@ app.use(cors({
     credentials: true,
 }));
 
-// Log MongoDB connection attempt
-console.log('Attempting to connect to MongoDB...');
-connectionDB()
-    .then(() => console.log('MongoDB connected successfully'))
-    .catch(err => console.error('MongoDB connection failed:', err));
+// Initialize MongoDB connection - but don't block the app startup
+// In serverless, connections are established per request
+console.log('MongoDB connection will be established per request');
 
 app.use(express.json())
+
+// Ensure database connection for each request
+app.use(async (req, res, next) => {
+    try {
+        await connectionDB();
+        next();
+    } catch (error) {
+        console.error('Database connection failed:', error);
+        res.status(500).json({ error: 'Database connection failed' });
+    }
+});
 
 //user 
 app.use("/api/users", userRouter)

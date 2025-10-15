@@ -1,5 +1,5 @@
 import postModel from "../../../db/models/post.model.js";
-import userModel from "../../../DB/models/user.model.js";
+import userModel from "../../../db/models/user.model.js";
 import { asyncHandler } from "../../../utils/globalErrorHandling.js";
 import { uploadImageToImgBB } from "../../../utils/imgbbUpload.js";
 
