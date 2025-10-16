@@ -4,6 +4,13 @@
 
 :root {
   font-family: "Poppins";
+  color-scheme: light;
+}
+
+html,
+body {
+  color: #000 !important;
+  background-color: #fff !important;
 }
 
 .main-color {
@@ -42,6 +49,7 @@
 .web-title,
 .header-p {
   font-family: "Miniver";
+  color: #000 !important;
 }
 
 .highlight {
